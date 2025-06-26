@@ -1,26 +1,46 @@
-# --- Quiz Project ---
+# --- Imports ---
+import random;
+import time;
 
-# TODO: Create 5 quiz questions with prompts and answers
+
+# --- Main Program ---
+
+# Question & answer list
 questions = [
-    {"prompt": "Question 1 goes here...\n", "answer": "answer1"},
-    # Example format:
-    # {"prompt": "What is 2 + 2?", "answer": "4"},
-    # {"prompt": "Capital of France?", "answer": "Paris"}
+    {"prompt": "What year was the Declaration of Independence signed?\n", "answer": "1776"},
+    {"prompt": "In what mountain range is Mount Everest located?\n", "answer": "The Himalayas"},
+    {"prompt": "Who wrote the novel \033[3mTo Kill a Mockingbird?\033[0m\n", "answer": "Harper Lee"},
+    {"prompt": "What is the most plentiful gas on Earth?\n", "answer": "nitrogen"},
+    {"prompt": "What was the name of the Nazi cipher device broken by Alan Turing?.\n", "answer": "the Enigma"},
 ]
 
-# Initialize score
-score = 0
+# Shuffle question order
+random.shuffle(questions);
 
 # Loop through each question
+score = 0
 for q in questions:
     # Ask the user the question
     user_input = input(q["prompt"] + "Your answer: ").strip().lower()
 
-    # TODO: Handle blank input
-    
-    # TODO: Check if the user's answer is correct
-    
-    # TODO: Provide feedback (correct/incorrect) — optional
+    # Check for blank input
+    while user_input.strip() == "":
+        user_input = input(q["prompt"] + "Your answer: ").strip().lower()
 
-# Show final score
-print(f"You got {score} out of {len(questions)} correct!") 
+    # Mark answer correct/incorrect
+    answerForm = q["answer"].lower();
+    if user_input == answerForm:
+        print("\033[32mCorrect\033[0m.\n");
+        score += 1;
+    else:
+        print(f"\033[31mIncorrect\033[0m. The correct answer was {q["answer"]}.\n");
+
+
+# Display final score & percentage
+percentage = round(100 * (score / len(questions)));
+
+print("Your score is");
+for i in range (3):
+    print(".");
+    time.sleep(0.5);
+print(f"a {score} out of {len(questions)}! That means you got {percentage}% correct.");
